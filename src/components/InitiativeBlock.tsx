@@ -3,8 +3,9 @@ import { Initiative } from '../interfaces/Initiative'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import { withStyles, StyledComponentProps } from '@material-ui/core'
+import { withStyles, StyledComponentProps, Theme } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
+import Paper from '@material-ui/core/Paper'
 import { Dispatch } from 'redux'
 const { min, abs } = Math
 
@@ -34,46 +35,54 @@ const InitiativeBlock = (props: Props) => {
   }
 
   return (
-    <Grid container spacing={32}>
-      <Grid item>
-        <TextField
-          onChange={generateAnnounce('name')}
-          className={classes.textField}
-          label='Name'
-          value={name} />
-        <TextField
-          className={classes.textField}
-          onChange={generateAnnounce('value', toNumber)}
-          onBlur={generateAnnounce('value', () => min(abs(value) || 0, 40))}
-          label='Initiative'
-          value={value} />
-        <TextField
-          className={classes.textField}
-          onChange={generateAnnounce('health', toNumber)}
-          onBlur={generateAnnounce('health', () => min(abs(health) || 0, 1500))}
-          label='Health'
-          value={health} />
-        <Button
-          onClick={() => dispatch({ type: 'DELETE_INITIATIVE', id })}
-          variant='contained'
-          size='small'
-          color='default'>
-          <DeleteIcon />
-        </Button>
+    <Paper className={classes.paper}>
+      <Grid container spacing={16} direction='row' alignItems='center'>
+        <Grid item>
+          <TextField
+            onChange={generateAnnounce('name')}
+            className={classes.textField}
+            label='Name'
+            value={name} />
+        </Grid>
+        <Grid item>
+          <TextField
+            className={classes.textField}
+            onChange={generateAnnounce('value', toNumber)}
+            onBlur={generateAnnounce('value', () => min(abs(value) || 0, 40))}
+            label='Initiative'
+            value={value} />
+        </Grid>
+        <Grid item>
+          <TextField
+            className={classes.textField}
+            onChange={generateAnnounce('health', toNumber)}
+            onBlur={generateAnnounce('health', () => min(abs(health) || 0, 1500))}
+            label='Health'
+            value={health} />
+        </Grid>
+        <Grid item>
+          <Button
+            onClick={() => dispatch({ type: 'DELETE_INITIATIVE', id })}
+            variant='contained'
+            size='small'
+            color='secondary'>
+            <DeleteIcon />
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
+    </Paper>
   )
 }
 
-// TODO: Fix types...
-const styles = (theme: any): any => ({
-  paper: {
-    padding: theme.spacing.unit,
-    textAlign: 'center'
-  },
+const styles = (theme: Theme) => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
+  },
+  paper: {
+    padding: theme.spacing.unit,
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
   }
 })
 
