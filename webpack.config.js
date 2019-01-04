@@ -1,32 +1,48 @@
-const path = require('path'),
-  HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const typescript = {
-  test: /\.tsx?$/,
-  use: 'awesome-typescript-loader'
+const dir = (...bits) => path.resolve(__dirname, ...bits)
+
+// Rules
+const babel = {
+  test: /\.jsx?$/,
+  exclude: /node_modules/,
+  loader: 'babel-loader'
 }
 
 const css = {
   test: /\.css$/,
-  use: [ 'style-loader', 'css-loader' ]
+  use: ExtractTextPlugin.extract({
+    fallback: 'style-loader',
+    use: [
+      { loader:'css-loader', options: { modules: true } }
+    ]
+  })
 }
+
+// Plugins
+const clean = new CleanWebpackPlugin(['dist'])
+
+const extractText = new ExtractTextPlugin('app-[hash].css')
 
 const html = new HtmlWebpackPlugin({
   template: 'src/index.html'
-});
+})
 
 module.exports = {
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: [ '.js', '.jsx' ]
   },
-  entry: './src/index.tsx',
+  entry: dir('src', 'index.jsx'),
   devtool: 'source-map',
   output: {
-    filename: 'app.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: 'app-[hash].js',
+    path: dir('dist')
   },
   module: {
-    rules: [typescript, css]
+    rules: [babel, css]
   },
-  plugins: [html]
+  plugins: [clean, extractText, html]
 }
