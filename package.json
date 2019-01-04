@@ -16,9 +16,11 @@
     "@babel/core": "7.2.2",
     "@babel/preset-env": "7.2.3",
     "@babel/preset-react": "7.0.0",
+    "autoprefixer": "^9.4.4",
     "babel-loader": "8.0.5",
     "clean-webpack-plugin": "1.0.0",
     "css-loader": "2.1.0",
+    "cssnano": "^4.1.8",
     "eslint": "5.11.1",
     "eslint-config-standard": "12.0.0",
     "eslint-plugin-import": "2.14.0",
@@ -27,7 +29,10 @@
     "eslint-plugin-standard": "4.0.0",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
     "html-webpack-plugin": "3.2.0",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.5.0",
     "style-loader": "0.23.1",
+    "stylelint": "^9.9.0",
     "webpack": "4.28.3",
     "webpack-cli": "3.2.0"
   }
